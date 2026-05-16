@@ -1,0 +1,1 @@
+# SGC_Projeto_Industria
