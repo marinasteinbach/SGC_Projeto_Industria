@@ -1,13 +1,76 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+enum Tipo {
+  BAIXA
+  AJUSTE
+}
+
+enum Perfil {
+  GERENTE
+  OPERADOR
+}
+
+enum Status {
+  ATIVO
+  RESOLVIDO
+}
+
+model Produto {
+  id                 Int            @id @default(autoincrement())
+  nome               String
+  quantidade_estoque Int
+  minimo             Int
+  data_cadastro      DateTime       @default(now())
+  movimentacoes      Movimentacao[]
+  alertas            Alerta[]
+  sessoes            Sessao[]
+}
+
+model Usuario {
+  id            Int            @id @default(autoincrement())
+  nome          String
+  perfil        Perfil         @default(GERENTE)
+  movimentacoes Movimentacao[]
+  sessoes       Sessao[]
+}
+
+model Movimentacao {
+  id            Int      @id @default(autoincrement())
+  tipo          Tipo     @default(BAIXA)
+  quantidade    Int
+  data_processo DateTime @default(now())
+  produto_id    Int
+  usuario_id    Int
+
+  produto Produto @relation(fields: [produto_id], references: [id])
+  usuario Usuario @relation(fields: [usuario_id], references: [id])
+}
+
+model Alerta {
+  id           Int      @id @default(autoincrement())
+  produto_id   Int
+  data_geracao DateTime @default(now())
+  status       Status   @default(ATIVO)
+
+  produto Produto @relation(fields: [produto_id], references: [id])
+}
+
+model Sessao {
+  id               Int      @id @default(autoincrement())
+  produto_id       Int
+  usuario_id       Int
+  timestamp_inicio DateTime @default(now())
+  lock_ativo       Boolean  @default(true)
+
+  produto Produto @relation(fields: [produto_id], references: [id])
+  usuario Usuario @relation(fields: [usuario_id], references: [id])
 }
