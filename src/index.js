@@ -7,11 +7,6 @@ app.get('/', (req, res) => {
 res.json({ mensagem: 'Servidor funcionando!' });
 });
  
-app.listen(3000, () => {
-
-
-    console.log('Servidor rodando em http://localhost:3000');
-});
 
 
 const ingredientes = [
@@ -32,4 +27,12 @@ return res.status(404).json({ erro: 'Ingrediente não encontrado' });
 }
  
 res.json(produto);
+});
+
+
+
+
+
+app.listen(3000, () => {
+    console.log('Servidor rodando em http://localhost:3000');
 });

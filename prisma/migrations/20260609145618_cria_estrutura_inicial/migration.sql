@@ -18,7 +18,7 @@ CREATE TABLE "Produto" (
     CONSTRAINT "Produto_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
+-- CreateTable'
 CREATE TABLE "Usuario" (
     "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
