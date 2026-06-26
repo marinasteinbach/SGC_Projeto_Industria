@@ -1,0 +1,37 @@
+###
+GET http://localhost:3000/estoque
+
+
+
+###
+
+POST http://localhost:3000/cozinhar
+Content-Type: application/json
+
+{
+    "id": 1,
+    "quantidade": 3
+}
+
+
+###
+
+POST http://localhost:3000/cozinhar
+Content-Type: application/json
+
+{
+    "id": 1,
+    "quantidade": 100
+}
+
+
+###
+
+POST http://localhost:3000/produtos
+Content-Type: application/json
+
+{
+    "nome": "Tomate",
+    "quantidade": 20,
+    "minimo": 5
+}
